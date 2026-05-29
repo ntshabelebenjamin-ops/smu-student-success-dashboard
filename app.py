@@ -202,7 +202,7 @@ else:
     st.info(
         "Please upload the FTEN Biographical Questionnaire dataset."
     )
-        # =====================================================
+            # =====================================================
     # FIRST-GENERATION UNIVERSITY STUDENTS
     # =====================================================
 
@@ -219,9 +219,11 @@ else:
             first_generation_column
         )
 
-        col1, col2 = st.columns([1, 2])
+        left, right = st.columns([1, 2])
 
-        with col1:
+        with left:
+
+            st.subheader("Summary Table")
 
             st.dataframe(
                 freq,
@@ -234,7 +236,7 @@ else:
                 "📥 Download First-Generation Student Data"
             )
 
-        with col2:
+        with right:
 
             fig = executive_chart(
                 freq,
@@ -246,15 +248,13 @@ else:
                 use_container_width=True
             )
 
-        largest_group = (
-            freq[freq["Response"] != "TOTAL"]
-            .iloc[0]["Response"]
-        )
+        chart_data = freq[
+            freq["Response"] != "TOTAL"
+        ]
 
-        largest_pct = (
-            freq[freq["Response"] != "TOTAL"]
-            .iloc[0]["Percentage"]
-        )
+        largest_group = chart_data.iloc[0]["Response"]
+
+        largest_pct = chart_data.iloc[0]["Percentage"]
 
         st.info(
             f"{largest_pct}% of students fall within the '{largest_group}' category."
@@ -263,13 +263,13 @@ else:
     else:
 
         st.warning(
-            "First-generation university student variable not found."
+            "The First-Generation University Student variable could not be found."
         )
 
     st.divider()
 
     # =====================================================
-    # RURAL VS URBAN BACKGROUND
+    # RURAL VERSUS URBAN BACKGROUND
     # =====================================================
 
     st.header("Rural versus Urban Background")
@@ -285,9 +285,11 @@ else:
             rural_urban_column
         )
 
-        col1, col2 = st.columns([1, 2])
+        left, right = st.columns([1, 2])
 
-        with col1:
+        with left:
+
+            st.subheader("Summary Table")
 
             st.dataframe(
                 freq,
@@ -300,7 +302,7 @@ else:
                 "📥 Download Rural versus Urban Data"
             )
 
-        with col2:
+        with right:
 
             fig = executive_chart(
                 freq,
@@ -312,15 +314,13 @@ else:
                 use_container_width=True
             )
 
-        largest_group = (
-            freq[freq["Response"] != "TOTAL"]
-            .iloc[0]["Response"]
-        )
+        chart_data = freq[
+            freq["Response"] != "TOTAL"
+        ]
 
-        largest_pct = (
-            freq[freq["Response"] != "TOTAL"]
-            .iloc[0]["Percentage"]
-        )
+        largest_group = chart_data.iloc[0]["Response"]
+
+        largest_pct = chart_data.iloc[0]["Percentage"]
 
         st.info(
             f"{largest_pct}% of students originate from '{largest_group}' communities."
@@ -329,11 +329,26 @@ else:
     else:
 
         st.warning(
-            "Rural/Urban background variable not found."
+            "The Rural versus Urban variable could not be found."
         )
 
     st.divider()
 
+    # =====================================================
+    # PART 1 SUMMARY
+    # =====================================================
+
     st.success(
-        "Part 1 completed successfully. Next section: Financial Vulnerability and NSFAS Dependency."
+        """
+        Part 1 Complete
+
+        Strategic Student Success Indicators Covered:
+
+        • First-Generation University Students
+
+        • Rural versus Urban Background
+
+        Next Section:
+        Financial Vulnerability and NSFAS Dependency
+        """
     )
