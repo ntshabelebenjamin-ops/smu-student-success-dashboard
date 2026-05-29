@@ -13,7 +13,7 @@ st.set_page_config(
 )
 
 # =====================================================
-# DASHBOARD HEADER
+# DASHBOARD TITLE
 # =====================================================
 
 st.title(
@@ -27,7 +27,7 @@ st.caption(
 st.markdown("""
 This dashboard provides an executive-level analysis of student success risk factors among the 2025 First-Time Entering Students (FTEN) cohort.
 
-The dashboard focuses on:
+Strategic Student Success Indicators:
 
 • First-Generation University Students
 
@@ -103,10 +103,13 @@ if uploaded_file is not None:
     # HELPER FUNCTIONS
     # =====================================================
 
-    def create_profile_table(df, column_name):
+    def create_profile_table(
+        dataframe,
+        column_name
+    ):
 
         freq = (
-            df[column_name]
+            dataframe[column_name]
             .fillna("Missing")
             .value_counts()
             .reset_index()
@@ -178,7 +181,9 @@ if uploaded_file is not None:
         fig.update_layout(
             title={
                 "text": title,
-                "font": {"size": 16}
+                "font": {
+                    "size": 16
+                }
             },
             font={
                 "size": 14
@@ -187,168 +192,18 @@ if uploaded_file is not None:
             yaxis_title="",
             plot_bgcolor="white",
             paper_bgcolor="white",
-            height=500,
+            height=550,
             showlegend=False
         )
 
         return fig
 
     st.success(
-        "Dataset uploaded successfully. Ready for Part 1B."
+        "Part 1A loaded successfully."
     )
 
 else:
 
     st.info(
         "Please upload the FTEN Biographical Questionnaire dataset."
-    )
-            # =====================================================
-    # FIRST-GENERATION UNIVERSITY STUDENTS
-    # =====================================================
-
-    st.header("First-Generation University Students")
-
-    first_generation_column = (
-        "25. Have any of your close family members attended university?"
-    )
-
-    if first_generation_column in df.columns:
-
-        freq = create_profile_table(
-            df,
-            first_generation_column
-        )
-
-        left, right = st.columns([1, 2])
-
-        with left:
-
-            st.subheader("Summary Table")
-
-            st.dataframe(
-                freq,
-                use_container_width=True
-            )
-
-            download_table(
-                freq,
-                "First_Generation_Students.csv",
-                "📥 Download First-Generation Student Data"
-            )
-
-        with right:
-
-            fig = executive_chart(
-                freq,
-                "First-Generation University Students (%)"
-            )
-
-            st.plotly_chart(
-                fig,
-                use_container_width=True
-            )
-
-        chart_data = freq[
-            freq["Response"] != "TOTAL"
-        ]
-
-        largest_group = chart_data.iloc[0]["Response"]
-
-        largest_pct = chart_data.iloc[0]["Percentage"]
-
-        st.info(
-            f"{largest_pct}% of students fall within the '{largest_group}' category."
-        )
-
-    else:
-
-        st.warning(
-            "The First-Generation University Student variable could not be found."
-        )
-
-    st.divider()
-
-    # =====================================================
-    # RURAL VERSUS URBAN BACKGROUND
-    # =====================================================
-
-    st.header("Rural versus Urban Background")
-
-    rural_urban_column = (
-        "27. How would you describe the place in which your home is situated?"
-    )
-
-    if rural_urban_column in df.columns:
-
-        freq = create_profile_table(
-            df,
-            rural_urban_column
-        )
-
-        left, right = st.columns([1, 2])
-
-        with left:
-
-            st.subheader("Summary Table")
-
-            st.dataframe(
-                freq,
-                use_container_width=True
-            )
-
-            download_table(
-                freq,
-                "Rural_Urban_Background.csv",
-                "📥 Download Rural versus Urban Data"
-            )
-
-        with right:
-
-            fig = executive_chart(
-                freq,
-                "Rural versus Urban Background (%)"
-            )
-
-            st.plotly_chart(
-                fig,
-                use_container_width=True
-            )
-
-        chart_data = freq[
-            freq["Response"] != "TOTAL"
-        ]
-
-        largest_group = chart_data.iloc[0]["Response"]
-
-        largest_pct = chart_data.iloc[0]["Percentage"]
-
-        st.info(
-            f"{largest_pct}% of students originate from '{largest_group}' communities."
-        )
-
-    else:
-
-        st.warning(
-            "The Rural versus Urban variable could not be found."
-        )
-
-    st.divider()
-
-    # =====================================================
-    # PART 1 SUMMARY
-    # =====================================================
-
-    st.success(
-        """
-        Part 1 Complete
-
-        Strategic Student Success Indicators Covered:
-
-        • First-Generation University Students
-
-        • Rural versus Urban Background
-
-        Next Section:
-        Financial Vulnerability and NSFAS Dependency
-        """
     )
