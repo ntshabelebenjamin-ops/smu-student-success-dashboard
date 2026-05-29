@@ -202,3 +202,138 @@ else:
     st.info(
         "Please upload the FTEN Biographical Questionnaire dataset."
     )
+        # =====================================================
+    # FIRST-GENERATION UNIVERSITY STUDENTS
+    # =====================================================
+
+    st.header("First-Generation University Students")
+
+    first_generation_column = (
+        "25. Have any of your close family members attended university?"
+    )
+
+    if first_generation_column in df.columns:
+
+        freq = create_profile_table(
+            df,
+            first_generation_column
+        )
+
+        col1, col2 = st.columns([1, 2])
+
+        with col1:
+
+            st.dataframe(
+                freq,
+                use_container_width=True
+            )
+
+            download_table(
+                freq,
+                "First_Generation_Students.csv",
+                "📥 Download First-Generation Student Data"
+            )
+
+        with col2:
+
+            fig = executive_chart(
+                freq,
+                "First-Generation University Students (%)"
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True
+            )
+
+        largest_group = (
+            freq[freq["Response"] != "TOTAL"]
+            .iloc[0]["Response"]
+        )
+
+        largest_pct = (
+            freq[freq["Response"] != "TOTAL"]
+            .iloc[0]["Percentage"]
+        )
+
+        st.info(
+            f"{largest_pct}% of students fall within the '{largest_group}' category."
+        )
+
+    else:
+
+        st.warning(
+            "First-generation university student variable not found."
+        )
+
+    st.divider()
+
+    # =====================================================
+    # RURAL VS URBAN BACKGROUND
+    # =====================================================
+
+    st.header("Rural versus Urban Background")
+
+    rural_urban_column = (
+        "27. How would you describe the place in which your home is situated?"
+    )
+
+    if rural_urban_column in df.columns:
+
+        freq = create_profile_table(
+            df,
+            rural_urban_column
+        )
+
+        col1, col2 = st.columns([1, 2])
+
+        with col1:
+
+            st.dataframe(
+                freq,
+                use_container_width=True
+            )
+
+            download_table(
+                freq,
+                "Rural_Urban_Background.csv",
+                "📥 Download Rural versus Urban Data"
+            )
+
+        with col2:
+
+            fig = executive_chart(
+                freq,
+                "Rural versus Urban Background (%)"
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True
+            )
+
+        largest_group = (
+            freq[freq["Response"] != "TOTAL"]
+            .iloc[0]["Response"]
+        )
+
+        largest_pct = (
+            freq[freq["Response"] != "TOTAL"]
+            .iloc[0]["Percentage"]
+        )
+
+        st.info(
+            f"{largest_pct}% of students originate from '{largest_group}' communities."
+        )
+
+    else:
+
+        st.warning(
+            "Rural/Urban background variable not found."
+        )
+
+    st.divider()
+
+    st.success(
+        "Part 1 completed successfully. Next section: Financial Vulnerability and NSFAS Dependency."
+    )
