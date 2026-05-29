@@ -593,6 +593,238 @@ if uploaded_file is not None:
         Language Diversity and Schooling Background
         """
     )
+        # =====================================================
+    # PART 3
+    # LANGUAGE DIVERSITY AND SCHOOLING BACKGROUND
+    # =====================================================
+
+    st.header(
+        "Language Diversity and Schooling Background"
+    )
+
+    language_variables = {
+
+        "3. What was the main language used by teachers in class?":
+        "Language of Learning and Teaching",
+
+        "5. Was your language learning at school the same as your home language?":
+        "Alignment Between Home and School Language",
+
+        "6. Is English your first, second or third language?":
+        "English Language Exposure"
+    }
+
+    for column_name, title in language_variables.items():
+
+        if column_name in df.columns:
+
+            st.subheader(title)
+
+            freq = create_profile_table(
+                df,
+                column_name
+            )
+
+            left, right = st.columns([1, 2])
+
+            with left:
+
+                st.dataframe(
+                    freq,
+                    use_container_width=True
+                )
+
+                download_table(
+                    freq,
+                    f"{title}.csv",
+                    f"📥 Download {title}"
+                )
+
+            with right:
+
+                fig = executive_chart(
+                    freq,
+                    f"{title} (%)"
+                )
+
+                st.plotly_chart(
+                    fig,
+                    use_container_width=True
+                )
+
+    st.divider()
+
+    # =====================================================
+    # FAMILY RESPONSIBILITIES
+    # =====================================================
+
+    st.header(
+        "Family Responsibilities"
+    )
+
+    dependents_column = (
+        "29. Do you have any dependents (e.g., Children, cousins, siblings, or nephews that you financially provide for)?"
+    )
+
+    if dependents_column in df.columns:
+
+        freq = create_profile_table(
+            df,
+            dependents_column
+        )
+
+        left, right = st.columns([1, 2])
+
+        with left:
+
+            st.dataframe(
+                freq,
+                use_container_width=True
+            )
+
+            download_table(
+                freq,
+                "Family_Responsibilities.csv",
+                "📥 Download Family Responsibility Data"
+            )
+
+        with right:
+
+            fig = executive_chart(
+                freq,
+                "Family Responsibilities (%)"
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True
+            )
+
+    st.divider()
+
+    # =====================================================
+    # COMMUTING CHALLENGES
+    # =====================================================
+
+    st.header(
+        "Commuting Challenges"
+    )
+
+    commuting_variables = {
+
+        "43. How far away from campus do you live?":
+        "Distance from Campus",
+
+        "45. How long will it take you to travel to campus to arrive at 8am lecture on time?":
+        "Travel Time to Campus"
+    }
+
+    for column_name, title in commuting_variables.items():
+
+        if column_name in df.columns:
+
+            st.subheader(title)
+
+            freq = create_profile_table(
+                df,
+                column_name
+            )
+
+            left, right = st.columns([1, 2])
+
+            with left:
+
+                st.dataframe(
+                    freq,
+                    use_container_width=True
+                )
+
+                download_table(
+                    freq,
+                    f"{title}.csv",
+                    f"📥 Download {title}"
+                )
+
+            with right:
+
+                fig = executive_chart(
+                    freq,
+                    f"{title} (%)"
+                )
+
+                st.plotly_chart(
+                    fig,
+                    use_container_width=True
+                )
+
+    st.divider()
+
+    # =====================================================
+    # EXECUTIVE SUMMARY OF RISK FACTORS
+    # =====================================================
+
+    st.header(
+        "Strategic Student Success Indicators"
+    )
+
+    st.markdown("""
+    The following indicators have been identified as critical student success and retention factors:
+
+    • First-Generation University Students
+
+    • Rural versus Urban Background
+
+    • Financial Vulnerability and NSFAS Dependency
+
+    • Language Diversity and Schooling Background
+
+    • Family Responsibilities
+
+    • Commuting Challenges
+    """)
+
+    st.success(
+        """
+        Part 3 Complete
+
+        Strategic Student Success Dashboard completed successfully.
+
+        Covered Indicators:
+
+        ✓ First-Generation University Students
+
+        ✓ Rural versus Urban Background
+
+        ✓ Financial Vulnerability and NSFAS Dependency
+
+        ✓ Language Diversity and Schooling Background
+
+        ✓ Family Responsibilities
+
+        ✓ Commuting Challenges
+        """
+    )
+
+    st.divider()
+
+    # =====================================================
+    # DOWNLOAD COMPLETE DATASET
+    # =====================================================
+
+    st.header(
+        "Download Dashboard Results"
+    )
+
+    csv = df.to_csv(
+        index=False
+    ).encode("utf-8")
+
+    st.download_button(
+        label="📥 Download Complete Dataset",
+        data=csv,
+        file_name="SMU_Student_Success_Dashboard_2025.csv",
+        mime="text/csv"
+    )
 
 else:
 
