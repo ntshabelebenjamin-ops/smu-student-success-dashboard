@@ -328,6 +328,271 @@ if uploaded_file is not None:
     st.success(
         "Part 1B loaded successfully."
     )
+        # =====================================================
+    # PART 2
+    # FINANCIAL VULNERABILITY AND NSFAS DEPENDENCY
+    # =====================================================
+
+    st.header(
+        "Financial Vulnerability and NSFAS Dependency"
+    )
+
+    st.markdown("""
+    This section analyses student funding arrangements and
+    dependence on financial aid mechanisms.
+    """)
+
+    # =====================================================
+    # TUITION FUNDING
+    # =====================================================
+
+    tuition_column = (
+        "48. How do you plan to pay for your tuition fees?"
+    )
+
+    if tuition_column in df.columns:
+
+        st.subheader(
+            "Tuition Funding Sources"
+        )
+
+        freq = create_profile_table(
+            df,
+            tuition_column
+        )
+
+        left, right = st.columns([1, 2])
+
+        with left:
+
+            st.dataframe(
+                freq,
+                use_container_width=True
+            )
+
+            download_table(
+                freq,
+                "Tuition_Funding.csv",
+                "📥 Download Tuition Funding Data"
+            )
+
+        with right:
+
+            fig = executive_chart(
+                freq,
+                "Tuition Funding Sources (%)"
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True
+            )
+
+    st.divider()
+
+    # =====================================================
+    # ACCOMMODATION FUNDING
+    # =====================================================
+
+    accommodation_column = (
+        "49. How do you plan to pay for your accommodation?"
+    )
+
+    if accommodation_column in df.columns:
+
+        st.subheader(
+            "Accommodation Funding Sources"
+        )
+
+        freq = create_profile_table(
+            df,
+            accommodation_column
+        )
+
+        left, right = st.columns([1, 2])
+
+        with left:
+
+            st.dataframe(
+                freq,
+                use_container_width=True
+            )
+
+            download_table(
+                freq,
+                "Accommodation_Funding.csv",
+                "📥 Download Accommodation Funding Data"
+            )
+
+        with right:
+
+            fig = executive_chart(
+                freq,
+                "Accommodation Funding Sources (%)"
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True
+            )
+
+    st.divider()
+
+    # =====================================================
+    # LIVING EXPENSES
+    # =====================================================
+
+    living_column = (
+        "50. How do you plan to pay for your living expenses?"
+    )
+
+    if living_column in df.columns:
+
+        st.subheader(
+            "Living Expense Funding Sources"
+        )
+
+        freq = create_profile_table(
+            df,
+            living_column
+        )
+
+        left, right = st.columns([1, 2])
+
+        with left:
+
+            st.dataframe(
+                freq,
+                use_container_width=True
+            )
+
+            download_table(
+                freq,
+                "Living_Expenses.csv",
+                "📥 Download Living Expenses Data"
+            )
+
+        with right:
+
+            fig = executive_chart(
+                freq,
+                "Living Expense Funding Sources (%)"
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True
+            )
+
+    st.divider()
+
+    # =====================================================
+    # NSFAS APPLICATION STATUS
+    # =====================================================
+
+    nsfas_application_column = (
+        "51. Have you applied for NSFAS?"
+    )
+
+    if nsfas_application_column in df.columns:
+
+        st.subheader(
+            "NSFAS Application Status"
+        )
+
+        freq = create_profile_table(
+            df,
+            nsfas_application_column
+        )
+
+        left, right = st.columns([1, 2])
+
+        with left:
+
+            st.dataframe(
+                freq,
+                use_container_width=True
+            )
+
+            download_table(
+                freq,
+                "NSFAS_Applications.csv",
+                "📥 Download NSFAS Application Data"
+            )
+
+        with right:
+
+            fig = executive_chart(
+                freq,
+                "NSFAS Application Status (%)"
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True
+            )
+
+    st.divider()
+
+    # =====================================================
+    # NSFAS APPROVAL STATUS
+    # =====================================================
+
+    nsfas_approval_column = (
+        "52. Has your NSFAS application been approved?"
+    )
+
+    if nsfas_approval_column in df.columns:
+
+        st.subheader(
+            "NSFAS Approval Status"
+        )
+
+        freq = create_profile_table(
+            df,
+            nsfas_approval_column
+        )
+
+        left, right = st.columns([1, 2])
+
+        with left:
+
+            st.dataframe(
+                freq,
+                use_container_width=True
+            )
+
+            download_table(
+                freq,
+                "NSFAS_Approval.csv",
+                "📥 Download NSFAS Approval Data"
+            )
+
+        with right:
+
+            fig = executive_chart(
+                freq,
+                "NSFAS Approval Status (%)"
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True
+            )
+
+    st.divider()
+
+    st.success(
+        """
+        Part 2 Complete
+
+        Financial Vulnerability and NSFAS Dependency
+        analysis loaded successfully.
+
+        Next Section:
+        Language Diversity and Schooling Background
+        """
+    )
 
 else:
 
