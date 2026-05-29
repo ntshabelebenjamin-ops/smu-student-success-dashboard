@@ -201,6 +201,133 @@ if uploaded_file is not None:
     st.success(
         "Part 1A loaded successfully."
     )
+        # =====================================================
+    # DATASET DIAGNOSTICS
+    # =====================================================
+
+    st.header("Dataset Diagnostics")
+
+    st.write("Checking Strategic Indicator Variables")
+
+    first_generation_column = (
+        "25. Have any of your close family members attended university?"
+    )
+
+    rural_urban_column = (
+        "27. How would you describe the place in which your home is situated?"
+    )
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        st.write("First Generation Variable Found:")
+
+        st.write(
+            first_generation_column in df.columns
+        )
+
+    with col2:
+
+        st.write("Rural/Urban Variable Found:")
+
+        st.write(
+            rural_urban_column in df.columns
+        )
+
+    st.divider()
+
+    # =====================================================
+    # FIRST-GENERATION UNIVERSITY STUDENTS
+    # =====================================================
+
+    if first_generation_column in df.columns:
+
+        st.header(
+            "First-Generation University Students"
+        )
+
+        freq = create_profile_table(
+            df,
+            first_generation_column
+        )
+
+        left, right = st.columns([1, 2])
+
+        with left:
+
+            st.dataframe(
+                freq,
+                use_container_width=True
+            )
+
+            download_table(
+                freq,
+                "First_Generation_Students.csv",
+                "📥 Download First-Generation Student Data"
+            )
+
+        with right:
+
+            fig = executive_chart(
+                freq,
+                "First-Generation University Students (%)"
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True
+            )
+
+    st.divider()
+
+    # =====================================================
+    # RURAL VS URBAN BACKGROUND
+    # =====================================================
+
+    if rural_urban_column in df.columns:
+
+        st.header(
+            "Rural versus Urban Background"
+        )
+
+        freq = create_profile_table(
+            df,
+            rural_urban_column
+        )
+
+        left, right = st.columns([1, 2])
+
+        with left:
+
+            st.dataframe(
+                freq,
+                use_container_width=True
+            )
+
+            download_table(
+                freq,
+                "Rural_Urban_Background.csv",
+                "📥 Download Rural versus Urban Data"
+            )
+
+        with right:
+
+            fig = executive_chart(
+                freq,
+                "Rural versus Urban Background (%)"
+            )
+
+            st.plotly_chart(
+                fig,
+                use_container_width=True
+            )
+
+    st.divider()
+
+    st.success(
+        "Part 1B loaded successfully."
+    )
 
 else:
 
