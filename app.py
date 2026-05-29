@@ -2,11 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
-except ImportError:
-    st.error(
-        "Plotly is not installed. Please add plotly to requirements.txt"
-    )
-    st.stop()
 
 # =====================================================
 # PAGE CONFIGURATION
@@ -18,7 +13,7 @@ st.set_page_config(
 )
 
 # =====================================================
-# DASHBOARD TITLE
+# DASHBOARD HEADER
 # =====================================================
 
 st.title(
@@ -68,6 +63,10 @@ if uploaded_file is not None:
 
     st.header("Executive Overview")
 
+    total_students = len(df)
+
+    total_variables = len(df.columns)
+
     total_cells = df.shape[0] * df.shape[1]
 
     completeness = round(
@@ -85,12 +84,12 @@ if uploaded_file is not None:
 
     col1.metric(
         "FTEN Students",
-        len(df)
+        total_students
     )
 
     col2.metric(
         "Variables",
-        len(df.columns)
+        total_variables
     )
 
     col3.metric(
@@ -101,16 +100,13 @@ if uploaded_file is not None:
     st.divider()
 
     # =====================================================
-    # HELPER FUNCTION
+    # HELPER FUNCTIONS
     # =====================================================
 
-    def create_profile_table(
-        dataframe,
-        column_name
-    ):
+    def create_profile_table(df, column_name):
 
         freq = (
-            dataframe[column_name]
+            df[column_name]
             .fillna("Missing")
             .value_counts()
             .reset_index()
@@ -127,14 +123,14 @@ if uploaded_file is not None:
             1
         )
 
-        total = pd.DataFrame({
+        total_row = pd.DataFrame({
             "Response": ["TOTAL"],
             "Frequency": [freq["Frequency"].sum()],
             "Percentage": [100.0]
         })
 
         freq = pd.concat(
-            [freq, total],
+            [freq, total_row],
             ignore_index=True
         )
 
@@ -180,31 +176,29 @@ if uploaded_file is not None:
         )
 
         fig.update_layout(
-
             title={
                 "text": title,
-                "font": {
-                    "size": 16
-                }
+                "font": {"size": 16}
             },
-
             font={
                 "size": 14
             },
-
             xaxis_title="Percentage (%)",
             yaxis_title="",
-
             plot_bgcolor="white",
             paper_bgcolor="white",
-
             height=500,
-
             showlegend=False
         )
 
         return fig
 
     st.success(
-        "Dataset uploaded successfully. Proceed to Part 1B."
+        "Dataset uploaded successfully. Ready for Part 1B."
+    )
+
+else:
+
+    st.info(
+        "Please upload the FTEN Biographical Questionnaire dataset."
     )
