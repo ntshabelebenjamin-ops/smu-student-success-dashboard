@@ -2,6 +2,11 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+except ImportError:
+    st.error(
+        "Plotly is not installed. Please add plotly to requirements.txt"
+    )
+    st.stop()
 
 # =====================================================
 # PAGE CONFIGURATION
